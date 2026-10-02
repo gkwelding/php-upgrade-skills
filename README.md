@@ -31,8 +31,8 @@ Each skill reads installed versions from `composer.lock`, uses Rector's composer
 ### Claude Code plugin
 
 ```
-/plugin marketplace add gkwelding/php-upgrade-skills
-/plugin install php-upgrade-skills@php-upgrade-skills
+/plugin marketplace add gkwelding/php-unit-tests-skills
+/plugin install php-upgrade-skills@blackpug
 ```
 
 Commands become `/php-upgrade-skills:upgrade-laravel <target>`, `/php-upgrade-skills:upgrade-symfony <target>` and `/php-upgrade-skills:upgrade-php-test-tools <target>`.
