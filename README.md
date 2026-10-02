@@ -100,6 +100,7 @@ skills/
         ├── phpunit/             # configuration, 9-to-10, 10-to-11, 11-to-12, 12-to-13
         └── pest/                # pest-upgrades
 scripts/build-skills.sh          # packages dist/*.skill for claude.ai
+evals/                           # with-vs-without-skill upgrade evals (see evals/README.md)
 ```
 
 `rules/shared/` exists in every skill so each can be installed alone. CI (`.github/workflows/check-rules.yml`) fails if the copies differ. Check locally with:
@@ -113,7 +114,15 @@ diff -r skills/upgrade-laravel/rules/shared skills/upgrade-php-test-tools/rules/
 
 First version. The rules were written against the installed packages rather than from memory: `laravel/framework` 10.50, 11.57, 12.69 and 13.34 with their `laravel/laravel` skeletons, `symfony/framework-bundle` 6.4.47, 7.4.20 and 8.1.8 with `doctrine/doctrine-bundle` 3.3 and `symfony/flex` 2.11, `phpunit/phpunit` 9.6, 10.5, 11.5, 12.5 and 13.4, `pestphp/pest` 2.36, 3.8, 4.7 and 5.3, `rector/rector` 2.6 and `driftingly/rector-laravel` 2.6, plus the official upgrade guides and changelogs. Behaviour the rules describe (dropped tests, notices, Carbon results, deprecation visibility, config migration) was reproduced by running code against those versions. Expect gaps: upgrade guides list many low-impact changes, and the rules keep the ones agents get wrong.
 
-There is no eval yet. One that would mean something: a set of small fixture apps pinned at each starting version (Laravel 10, 11 and 12; Symfony 6.4 and 7.4; PHPUnit 9 to 12, Pest 2 to 4), each seeded with the traps the rules cover (`float(…, 8, 2)` migrations, `diffInDays()` arithmetic, `@test` annotations, `withConsecutive()`, constraint option arrays, a blocking package with no compatible release), upgraded with and without the skills. Score each run on whether it reached the target, test count and results against the baseline, traps caught, unrequested changes in the diff, and whether it stopped correctly at the blocker.
+## Evals
+
+`evals/run.sh` upgrades small fixture projects twice with `claude -p`, once with the skill's slash command and once with a plain prompt, and scores both against the untouched baseline: suite green, target major installed (from `composer.lock`), test count kept (JUnit, so silently dropped tests show), deprecations and notices left, removed APIs still in the code, files changed and deleted, and cost, turns and minutes. A blind judge then compares the two diffs. Targets so far: a PHPUnit 9 library upgraded to PHPUnit 11, and a Laravel 10 app upgraded to 11.
+
+```
+evals/run.sh phpunit
+```
+
+See [evals/README.md](evals/README.md) for what each score means, how they were checked against deliberately bad upgrades, cost, Windows notes and the first result. Not covered yet: Symfony, Pest, PHPUnit 12+ and Laravel 12+, and the "stop at a blocking package" case.
 
 ## Licence
 
