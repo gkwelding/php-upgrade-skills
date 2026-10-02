@@ -1,0 +1,15 @@
+name: Check rules
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  shared-rules-identical:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: rules/shared must be identical in every skill
+        run: |
+          diff -r skills/upgrade-laravel/rules/shared skills/upgrade-symfony/rules/shared
+          diff -r skills/upgrade-laravel/rules/shared skills/upgrade-php-test-tools/rules/shared

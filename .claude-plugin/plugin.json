@@ -1,0 +1,23 @@
+{
+  "name": "php-upgrade-skills",
+  "displayName": "PHP Upgrade Skills",
+  "description": "Upgrade Laravel (10 to 13), Symfony (6.4 to 8) and PHPUnit / Pest one major at a time: reads composer.lock, plans each step, applies the official breaking changes, uses Rector where it applies, runs the tests after every step and stops with a report when a package blocks.",
+  "version": "0.1.0",
+  "author": {
+    "name": "Black Pug Ltd"
+  },
+  "license": "MIT",
+  "keywords": [
+    "php",
+    "upgrade",
+    "laravel",
+    "symfony",
+    "phpunit",
+    "pest",
+    "rector",
+    "composer",
+    "deprecations"
+  ],
+  "homepage": "https://github.com/gkwelding/php-upgrade-skills",
+  "repository": "https://github.com/gkwelding/php-upgrade-skills"
+}
