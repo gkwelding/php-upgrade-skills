@@ -55,6 +55,8 @@ scaffold() {
                 (cd "$dir" && composer update --quiet) ;;
             laravel)
                 composer create-project --quiet "laravel/laravel:^10" "$dir"
+                # Laravel 13 skeletons ship CLAUDE.md/AGENTS.md telling agents to install Laravel Boost; a run that follows it adds ~75 files and skews the scores.
+                rm -f "$dir/CLAUDE.md" "$dir/AGENTS.md"
                 # Laravel 10 needs doctrine/dbal for ->change(); Laravel 11 doesn't (a 10-to-11 trap).
                 (cd "$dir" && composer require --quiet doctrine/dbal:^3)
                 cp -r "$root/evals/fixtures/laravel/." "$dir/"
