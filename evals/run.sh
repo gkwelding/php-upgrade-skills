@@ -108,7 +108,7 @@ run_one() {
     # The prompt goes in on stdin: as an argument, Git Bash on Windows rewrites "/upgrade-laravel" into a
     # file path, and the usual fix (MSYS_NO_PATHCONV=1) would be inherited by Claude's own Bash tool,
     # where it breaks the composer and vendor/bin wrapper scripts.
-    (cd "$dir" && printf '%s' "$prompt" | claude -p ${MODEL:+--model "$MODEL"} \
+    (cd "$dir" && printf '%s' "$prompt" | claude -p --setting-sources project ${MODEL:+--model "$MODEL"} \
         --append-system-prompt "You are running non-interactively: nobody can answer questions. Where you would ask, choose the safest option, say so in your final message, and carry on." \
         --max-budget-usd "$budget" --no-session-persistence --permission-mode acceptEdits \
         --output-format stream-json --verbose \
